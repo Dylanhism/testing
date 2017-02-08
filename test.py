@@ -25,17 +25,17 @@ while not done:
   for event in pygame.event.get():
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
       mousePos = pygame.mouse.get_Pos()
-      if mousePos == redRect:
+      if redRect.collidepoint(mousePos):
         colour = RED
-      elif mousePos == blueRect:
+      elif blueRect.collidepoint(mousePos):
         colour = BLUE
-      elif mousePos == size1:
+      elif size1.collidepoint(mousePos):
         squareSize = (10, 10)
-      elif mousePos == size2:
+      elif size2.collidepoint(mousePos):
         squareSize = (20, 20)
-      elif mousePos == size3:
+      elif size3.collidepoint(mousePos):
         squareSize = (30, 30)
-      elif mousePos != redRect and mousePos != blueRect and mousePos != size1 and mousePos != size2:
+      elif redRect.collidepoint(mousePos) == False and blueRect.collidepoint(mousePos) == False and size1.collidepoint(mousePos) == False and size2.collidepoint(mousePos) == False and size3.collidepoint(mousePos) == False:
         pygame.draw.rect(screen, colour, (mousePos, squareSize), 0)
     elif event.type == pygame.QUIT:
       done = True
