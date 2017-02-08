@@ -23,7 +23,7 @@ size3 = pygame.Rect(750, 0, 25, 25)
 done = False
 while not done:
   for event in pygame.event.get():
-    if event.type == pygame.MOUSEBUTTONDOWN:
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
       mousePos = pygame.mouse.get_Pos()
       if mousePos == redRect:
         colour = RED
@@ -35,7 +35,7 @@ while not done:
         squareSize = (20, 20)
       elif mousePos == size3:
         squareSize = (30, 30)
-      elif mousePos != redRect && mousePos != blueRect && mousePos != size1 && mousePos != size2:
+      elif mousePos != redRect and mousePos != blueRect and mousePos != size1 and mousePos != size2:
         pygame.draw.rect(screen, colour, (mousePos, squareSize), 0)
     elif event.type == pygame.QUIT:
       done = True
