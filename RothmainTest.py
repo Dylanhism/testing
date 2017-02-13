@@ -98,6 +98,10 @@ def paint():
     pygame.draw.rect(screen, BLUE,(240,0, 40,40), 0)
     pygame.draw.rect(screen, PURPLE,(280,0, 40,40), 0)
     
+    pygame.draw.circle(screen, BLACK,(530, 20), 20, 2)
+    pygame.draw.rect(screen, BLACK,(560,0, 40, 40), 2)
+    
+    
     sizeFont = pygame.font.SysFont("Arial", 10)
     size1Text = sizeFont.render("1", True, BLACK)
     size2Text = sizeFont.render("2", True, BLACK)
@@ -117,9 +121,16 @@ def paint():
     size1 = pygame.Rect(700, 0, 25, 25)
     size2 = pygame.Rect(725, 0, 25, 25)
     size3 = pygame.Rect(750, 0, 25, 25)
+
+    circRect = pygame.Rect(510, 0, 40, 40)
+    squaRect = pygame.Rect(560, 0, 40, 40)
+
+    topRestrict = pygame.Rect(0,0, 800, 50)
     
     pygame.display.update()
     squareSize = (10,10)
+    circleSize = 5
+    isRect = True
     
     done = False
     while not done:
@@ -151,21 +162,29 @@ def paint():
                     colour = PURPLE
                 elif size1.collidepoint(mousePos):
                     squareSize = (10, 10)
+                    circleSize = 5
                 elif size2.collidepoint(mousePos):
                     squareSize = (20, 20)
+                    circleSize = 10
                 elif size3.collidepoint(mousePos):
                     squareSize = (30, 30)
-                elif size1.collidepoint(mousePos) == False and size2.collidepoint(mousePos) == False and size3.collidepoint(mousePos) == False:
-                    if blackRect.collidepoint(mousePos) == False and redRect.collidepoint(mousePos) == False and orangeRect.collidepoint(mousePos) == False and yellowRect.collidepoint(mousePos) == False:
-                        if  greenRect.collidepoint(mousePos) == False and cyanRect.collidepoint(mousePos) == False and blueRect.collidepoint(mousePos) == False and purpleRect.collidepoint(mousePos) == False:
-                            pygame.draw.rect(screen, colour, (rectSize, squareSize), 0)
-                            pygame.display.update()
+                    circleSize = 15
+                elif circRect.collidepoint(mousePos):
+                    isRect = False
+                elif squaRect.collidepoint(mousePos):
+                    isRect = True
+                elif topRestrict.collidepoint(mousePos) == False:
+                    if isRect:
+                        pygame.draw.rect(screen, colour, (rectSize, squareSize), 0)
+                        pygame.display.update()
+                    elif isRect == False:
+                        #pygame.draw.circle(screen, BLACK,(530, 20), 20, 2)
+                        pygame.draw.circle(screen, colour, mousePos, circleSize, 0)
+                        pygame.display.update()
             elif pressed3 == True:
-                if size1.collidepoint(mousePos) == False and size2.collidepoint(mousePos) == False and size3.collidepoint(mousePos) == False:
-                    if blackRect.collidepoint(mousePos) == False and redRect.collidepoint(mousePos) == False and orangeRect.collidepoint(mousePos) == False and yellowRect.collidepoint(mousePos) == False:
-                        if  greenRect.collidepoint(mousePos) == False and cyanRect.collidepoint(mousePos) == False and blueRect.collidepoint(mousePos) == False and purpleRect.collidepoint(mousePos) == False:
-                            pygame.draw.rect(screen, WHITE, (rectSize, squareSize), 0)
-                            pygame.display.update()
+                if topRestrict.collidepoint(mousePose) == False:
+                    pygame.draw.rect(screen, WHITE, (rectSize, squareSize), 0)
+                    pygame.display.update()
                     
     pygame.quit()
 
@@ -197,18 +216,26 @@ def instruct():
     screen.fill((255, 255, 255))
     sizeFont = pygame.font.SysFont("Arial", 25)
     backText = sizeFont.render("->Back to menu", True, BLACK) #Text you want to appear
-    instructText = sizeFont.render("Left click is to paint with colour. Left-click the colours on the top to change colour.", True, BLACK)
-    instruct2Text = sizeFont.render("Left click the numbers on the top to change the brush size.", True, BLACK)
-    instruct3Text = sizeFont.render("Press the escape key at any time to return to the main menu.", True, BLACK)
-    inst3Position = instruct3Text.get_rect()
-    inst3Position.centerx = screen.get_rect().centerx #centers text for a good look
-    inst3Position.centery = screen.get_rect().centery
-    inst2Position = instruct2Text.get_rect()
-    inst2Position.centerx = screen.get_rect().centerx
-    inst2Position.centery = screen.get_rect().centery - 100
+    instructText = sizeFont.render("Left click is to paint with colour.", True, BLACK)
+    instruct2Text = sizeFont.render("Left-click the colours on the top to change colour.", True, BLACK)
+    instruct3Text = sizeFont.render("Right-click to erase colours on the screen.", True, BLACK)
+    instruct4Text = sizeFont.render("Left click the numbers on the top to change the brush size.", True, BLACK)
+    instruct5Text = sizeFont.render("Press the escape key at any time to return to the main menu.", True, BLACK)
     instPosition = instructText.get_rect()
     instPosition.centerx = screen.get_rect().centerx
-    instPosition.centery = screen.get_rect().centery - 200
+    instPosition.centery = screen.get_rect().centery - 250
+    inst2Position = instruct2Text.get_rect()
+    inst2Position.centerx = screen.get_rect().centerx
+    inst2Position.centery = screen.get_rect().centery - 200
+    inst3Position = instruct3Text.get_rect()
+    inst3Position.centerx = screen.get_rect().centerx #centers text for a good look
+    inst3Position.centery = screen.get_rect().centery - 150
+    inst4Position = instruct4Text.get_rect()
+    inst4Position.centerx = screen.get_rect().centerx
+    inst4Position.centery = screen.get_rect().centery - 100
+
+
+
     backPosition = backText.get_rect()
     backPosition.centerx = screen.get_rect().centerx
     backPosition.centery = screen.get_rect().centery + 200
@@ -232,6 +259,5 @@ def instruct():
                 
     pygame.quit()
 menu()
-
 
 
